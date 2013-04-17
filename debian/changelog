@@ -1,0 +1,5 @@
+jxrlib (1.0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #705459)
+
+ -- Mathieu Malaterre <malat@debian.org>  Wed, 17 Apr 2013 16:08:34 +0200
