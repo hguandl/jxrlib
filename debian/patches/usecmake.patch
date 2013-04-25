@@ -1,10 +1,11 @@
 Description: Prefer a cmake based build system
 Author: Mathieu Malaterre <malat@debian.org>
+Forwarded: https://jxrlib.codeplex.com/discussions/440294
 
-Index: jxrlib/CMakeLists.txt
+Index: jxrlib-1.0/CMakeLists.txt
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ jxrlib/CMakeLists.txt	2013-04-17 15:47:47.017381518 +0200
++++ jxrlib-1.0/CMakeLists.txt	2013-04-25 11:16:26.201782548 +0200
 @@ -0,0 +1,131 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)
@@ -14,7 +15,7 @@ Index: jxrlib/CMakeLists.txt
 +# Need shared libs for ABI
 +set(BUILD_SHARED_LIBS ON)
 +
-+# helper macro to preserver original Makefile convention
++# helper macro to preserve original Makefile convention
 +macro(JXR_MAKE_OBJ SET_NAME)
 +  foreach(src ${SRC_${SET_NAME}})
 +    list(APPEND OBJ_${SET_NAME} ${DIR_${SET_NAME}}/${src})
@@ -110,7 +111,7 @@ Index: jxrlib/CMakeLists.txt
 +if(HAVE_STRLCPY_BSD)
 +	target_link_libraries(jxrglue ${BSD_LIBRARY})
 +endif()
-+	target_link_libraries(jxrglue jpegxr)
++target_link_libraries(jxrglue jpegxr)
 +# Enc app files
 +set(ENCAPP JxrEncApp)
 +add_executable(${ENCAPP} ${DIR_EXEC}/${ENCAPP}.c)
