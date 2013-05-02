@@ -1,3 +1,11 @@
+jxrlib (1.0-3) unstable; urgency=low
+
+  * Fix installation of headers (missing JXRTest.h)
+  * Fix encoder param settings
+    + d/p/fixparams.patch
+
+ -- Mathieu Malaterre <malat@debian.org>  Thu, 02 May 2013 13:29:20 +0200
+
 jxrlib (1.0-2) unstable; urgency=low
 
   * Fix man page typos

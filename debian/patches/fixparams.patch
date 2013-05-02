@@ -1,0 +1,22 @@
+Description: fix wrong encoder parameters set in jxrencapp
+Author: christoph_hausner
+Forwarded: no
+Origin: https://jxrlib.codeplex.com/SourceControl/changeset/9e324f38662583deec6fbb7d3272998d1a6f6ada
+
+Index: jxrlib-1.0/jxrencoderdecoder/JxrEncApp.c
+===================================================================
+--- jxrlib-1.0.orig/jxrencoderdecoder/JxrEncApp.c	2013-05-02 13:20:58.358888928 +0200
++++ jxrlib-1.0/jxrencoderdecoder/JxrEncApp.c	2013-05-02 13:21:35.694888509 +0200
+@@ -703,10 +703,10 @@
+ 		        else if (PI.bdBitDepth == BD_16)
+ 		        {
+ 			        if (args.fltAlphaQuality >= 0.8F)
+-				        pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8)(260 - 200.0F *
++				        pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = (U8)(260 - 200.0F *
+ 					        args.fltAlphaQuality + 0.5F);
+ 			        else
+-				        pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8)(180 - 100.0F *
++				        pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = (U8)(180 - 100.0F *
+ 					        args.fltAlphaQuality + 0.5F);
+ 		        }
+ 		        else if (PI.bdBitDepth == BD_32F)

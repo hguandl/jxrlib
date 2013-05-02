@@ -5,7 +5,7 @@ Forwarded: https://jxrlib.codeplex.com/discussions/440294
 Index: jxrlib-1.0/CMakeLists.txt
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ jxrlib-1.0/CMakeLists.txt	2013-04-25 11:16:26.201782548 +0200
++++ jxrlib-1.0/CMakeLists.txt	2013-05-02 13:25:25.078885925 +0200
 @@ -0,0 +1,131 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)
@@ -45,7 +45,7 @@ Index: jxrlib-1.0/CMakeLists.txt
 +endif()
 +
 +if(NOT JXRLIB_INSTALL_INCLUDE_DIR)
-+  set(JXRLIB_INSTALL_INCLUDE_DIR "include/jxrgluelib")
++  set(JXRLIB_INSTALL_INCLUDE_DIR "include/jxrlib")
 +endif()
 +
 +include_directories(
@@ -132,7 +132,7 @@ Index: jxrlib-1.0/CMakeLists.txt
 +install(TARGETS ${DECAPP} RUNTIME DESTINATION ${JXRLIB_INSTALL_BIN_DIR})
 +
 +# install rules
-+install(FILES jxrgluelib/JXRGlue.h jxrgluelib/JXRMeta.h
++install(FILES jxrgluelib/JXRGlue.h jxrgluelib/JXRMeta.h jxrtestlib/JXRTest.h
 +  DESTINATION ${JXRLIB_INSTALL_INCLUDE_DIR} COMPONENT Headers
 +)
 +install(DIRECTORY common/include/ DESTINATION ${JXRLIB_INSTALL_INCLUDE_DIR}
