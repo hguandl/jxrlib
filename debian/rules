@@ -32,9 +32,17 @@ debian/JxrDecApp.1: debian/JxrDecApp.1.in
 debian/JxrEncApp.1: debian/JxrEncApp.1.in
 	help2man --version-string=$(VER_FULL) --include=$< --output=$@ --no-info JxrEncApp
 
+debian/JPEGXR_DPK_Spec_1.0.txt: doc/JPEGXR_DPK_Spec_1.0.doc
+	antiword $< > $@
+
 override_dh_installman:
 	dh_installman -p$(pkg_bin) debian/JxrDecApp.1
 	dh_installman -p$(pkg_bin) debian/JxrEncApp.1
+
+override_dh_installdocs:
+	dh_installdocs doc/readme.txt
+	dh_installdocs debian/JPEGXR_DPK_Spec_1.0.txt
+	dh_installdocs
 
 get-orig-source:
 	#uscan --verbose --force-download --rename

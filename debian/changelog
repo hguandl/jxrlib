@@ -1,3 +1,11 @@
+jxrlib (1.1-1) unstable; urgency=low
+
+  * New upstream: 1.1
+  * Remove Depends: libbsd-dev, since upstream commit 0a033a9efad9
+  * Add documentation files (converted from .doc file)
+
+ -- Mathieu Malaterre <malat@debian.org>  Thu, 06 Jun 2013 15:49:11 +0200
+
 jxrlib (1.0-3) unstable; urgency=low
 
   * Fix installation of headers (missing JXRTest.h)

@@ -16,14 +16,16 @@ fi
 
 FOLDER=${PACKAGE}-${VERSION}
 
-# e96b2a813d13aa50353fb0f17cb5e6762ef2e37d
+# 1.0
 # wget -O jxrlib.tgz "http://download-codeplex.sec.s-msft.com/Download/SourceControlFileDownload.ashx?ProjectName=jxrlib&changeSetId=e96b2a813d13aa50353fb0f17cb5e6762ef2e37d"
-# -> cant find a way to download in tar.gz directly giving up
-#git clone https://git01.codeplex.com/jxrlib ${FOLDER}
-#cd ${FOLDER}
-#git checkout e96b2a813d13aa50353fb0f17cb5e6762ef2e37d
-#rm -rf .git*
-#cd ..
+# 1.1
+wget -O jxrlib.tgz "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=jxrlib&DownloadId=685250&FileTime=130142428056630000&Build=20552"
+
+tar xfz jxrlib.tgz
+
+rm jxrlib/bin/*.exe
+mv jxrlib ${FOLDER}
 
 GZIP="--best --no-name" tar czf ${TARFILE} ${FOLDER}
 rm -rf ${FOLDER}
+rm jxrlib.tgz
