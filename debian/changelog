@@ -1,3 +1,10 @@
+jxrlib (1.1-2) unstable; urgency=low
+
+  * Fix symbols file with new 1.1 symbols
+  * Rebuild avoiding RelWithDebInfo/-DNDEBUG pollution
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 07 Jun 2013 11:45:53 +0200
+
 jxrlib (1.1-1) unstable; urgency=low
 
   * New upstream: 1.1

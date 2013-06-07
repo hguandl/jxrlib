@@ -7,7 +7,8 @@ VER_FULL = $(shell dpkg-parsechangelog | grep '^Version' | cut -d' ' -f2 | cut -
 %:
 	dh $@ --buildsystem=cmake --parallel
 
-CMAKE_EXTRA_FLAGS += -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+# Purposely not set CMAKE_BUILD_TYPE, see #701231
+CMAKE_EXTRA_FLAGS += -DCMAKE_BUILD_TYPE:STRING="" \
  -DJXRLIB_INSTALL_LIB_DIR="lib/$(DEB_HOST_MULTIARCH)"
 
 override_dh_auto_configure:

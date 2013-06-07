@@ -1,4 +1,4 @@
-libjpegxr.so.0 libjxr 1.0
+libjpegxr.so.0 libjxr0 #MINVER#
  AdaptDiscriminant@Base 1.0
  AdaptHighpassDec@Base 1.0
  AdaptHighpassEnc@Base 1.0
@@ -239,13 +239,14 @@ libjpegxr.so.0 libjxr 1.0
  writeTileHeaderDC@Base 1.0
  writeTileHeaderHP@Base 1.0
  writeTileHeaderLP@Base 1.0
-libjxrglue.so.0 libjxr 1.0
+libjxrglue.so.0 libjxr0 #MINVER#
  BGR24_BGR32@Base 1.0
  BGR24_Gray8@Base 1.0
  BGR24_RGB24@Base 1.0
  BGR32_BGR24@Base 1.0
  BGR32_RGB24@Base 1.0
  BGRA32_RGBA32@Base 1.0
+ BlackWhite_Gray8@Base 1.1
  BufferCalcIFDSize@Base 1.0
  BufferCopyIFD@Base 1.0
  CalcMetadataOffsetSize@Base 1.0
@@ -352,11 +353,16 @@ libjxrglue.so.0 libjxr 1.0
  GetULong@Base 1.0
  GetUShort@Base 1.0
  Gray16Fixed_Gray32Float@Base 1.0
+ Gray16Fixed_Gray8@Base 1.1
  Gray16Half_Gray32Float@Base 1.0
+ Gray16Half_Gray8@Base 1.1
+ Gray16_Gray8@Base 1.1
  Gray32Fixed_Gray32Float@Base 1.0
+ Gray32Fixed_Gray8@Base 1.1
  Gray32Float_Gray16Fixed@Base 1.0
  Gray32Float_Gray16Half@Base 1.0
  Gray32Float_Gray32Fixed@Base 1.0
+ Gray32Float_Gray8@Base 1.1
  Gray8_BGR24@Base 1.0
  Gray8_RGB24@Base 1.0
  IFDEntryTypeSizes@Base 1.0
@@ -522,26 +528,36 @@ libjxrglue.so.0 libjxr 1.0
  PutTifUShort@Base 1.0
  PutULong@Base 1.0
  PutUShort@Base 1.0
+ RGB101010_RGB24@Base 1.1
  RGB101010_RGB48@Base 1.0
+ RGB128Fixed_RGB24@Base 1.1
  RGB128Fixed_RGB96Float@Base 1.0
+ RGB128Float_RGB24@Base 1.1
  RGB128Float_RGB96Float@Base 1.0
  RGB24_BGR24@Base 1.0
  RGB24_BGR32@Base 1.0
  RGB24_Gray8@Base 1.0
  RGB24_RGB555@Base 1.0
  RGB24_RGB565@Base 1.0
+ RGB48Fixed_RGB24@Base 1.1
  RGB48Fixed_RGB96Float@Base 1.0
+ RGB48Half_RGB24@Base 1.1
  RGB48Half_RGB64Half@Base 1.0
  RGB48Half_RGB96Float@Base 1.0
  RGB48_RGB101010@Base 1.0
+ RGB48_RGB24@Base 1.1
  RGB555_RGB24@Base 1.0
  RGB565_RGB24@Base 1.0
+ RGB64Fixed_RGB24@Base 1.1
  RGB64Fixed_RGB96Float@Base 1.0
+ RGB64Half_RGB24@Base 1.1
  RGB64Half_RGB48Half@Base 1.0
  RGB64Half_RGB96Float@Base 1.0
+ RGB96Fixed_RGB24@Base 1.1
  RGB96Fixed_RGB96Float@Base 1.0
  RGB96Float_RGB128Fixed@Base 1.0
  RGB96Float_RGB128Float@Base 1.0
+ RGB96Float_RGB24@Base 1.1
  RGB96Float_RGB48Fixed@Base 1.0
  RGB96Float_RGB48Half@Base 1.0
  RGB96Float_RGB64Fixed@Base 1.0
@@ -549,12 +565,18 @@ libjxrglue.so.0 libjxr 1.0
  RGB96Float_RGB96Fixed@Base 1.0
  RGB96Float_RGBE@Base 1.0
  RGBA128Fixed_RGBA128Float@Base 1.0
+ RGBA128Fixed_RGBA32@Base 1.1
  RGBA128Float_RGBA128Fixed@Base 1.0
+ RGBA128Float_RGBA32@Base 1.1
  RGBA128Float_RGBA64Fixed@Base 1.0
  RGBA128Float_RGBA64Half@Base 1.0
  RGBA32_BGRA32@Base 1.0
  RGBA64Fixed_RGBA128Float@Base 1.0
+ RGBA64Fixed_RGBA32@Base 1.1
  RGBA64Half_RGBA128Float@Base 1.0
+ RGBA64Half_RGBA32@Base 1.1
+ RGBA64_RGBA32@Base 1.1
+ RGBE_RGB24@Base 1.1
  RGBE_RGB96Float@Base 1.0
  ReadBinaryData@Base 1.0
  ReadContainer@Base 1.0
