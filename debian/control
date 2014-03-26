@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 9), cmake (>= 2.8.0)
 Homepage: https://jxrlib.codeplex.com/
 Vcs-Browser: http://anonscm.debian.org/viewvc/collab-maint/deb-maint/jxrlib/trunk/
 Vcs-Svn: svn://svn.debian.org/collab-maint/deb-maint/jxrlib/trunk
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 
 Package: libjxr0
 Section: libs

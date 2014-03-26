@@ -5,8 +5,8 @@ Forwarded: https://jxrlib.codeplex.com/discussions/440294
 Index: jxrlib-1.1/CMakeLists.txt
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ jxrlib-1.1/CMakeLists.txt	2013-06-06 15:58:15.154068121 +0200
-@@ -0,0 +1,133 @@
++++ jxrlib-1.1/CMakeLists.txt	2014-03-26 17:05:04.429637801 +0100
+@@ -0,0 +1,134 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)
 +cmake_minimum_required(VERSION 2.8)
@@ -135,6 +135,7 @@ Index: jxrlib-1.1/CMakeLists.txt
 +
 +# install rules
 +install(FILES jxrgluelib/JXRGlue.h jxrgluelib/JXRMeta.h jxrtestlib/JXRTest.h
++  image/sys/windowsmediaphoto.h
 +  DESTINATION ${JXRLIB_INSTALL_INCLUDE_DIR} COMPONENT Headers
 +)
 +install(DIRECTORY common/include/ DESTINATION ${JXRLIB_INSTALL_INCLUDE_DIR}
