@@ -1,3 +1,9 @@
+jxrlib (1.1-5) unstable; urgency=low
+
+  * Fix function signature. Closes: #748590
+
+ -- Mathieu Malaterre <malat@debian.org>  Thu, 22 May 2014 11:36:05 +0200
+
 jxrlib (1.1-4) unstable; urgency=low
 
   * Install missing header. Closes: #742716

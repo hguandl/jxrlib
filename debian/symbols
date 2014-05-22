@@ -73,7 +73,7 @@ libjpegxr.so.0 libjxr0 #MINVER#
  WriteWS_File@Base 1.0
  WriteWS_List@Base 1.0
  WriteWS_Memory@Base 1.0
- (arch=!mips !powerpc !s390 !s390x !sparc !powerpcspe !ppc64 !sparc64)_byteswap_ulong@Base 1.0
+ (arch=!mips !powerpc !s390 !s390x !sparc !powerpcspe !ppc64 !sparc64 !hppa !m68k)_byteswap_ulong@Base 1.0
  advanceMRPtr@Base 1.0
  advanceOneMBRow@Base 1.0
  allocateBitIOInfo@Base 1.0
