@@ -42,8 +42,8 @@ typedef struct tagWMPENCAPPARGS
 
     CWMIStrCodecParam wmiSCP;
     float fltImageQuality;
-    float fltAlphaQuality;
     Bool bOverlapSet;
+    Bool bColorFormatSet;
 } WMPENCAPPARGS;
 
 //----------------------------------------------------------------
@@ -64,9 +64,8 @@ void WmpEncAppUsage(const char* szExe)
     printf("  -o output.jxr                Output JPEG XR file name" CRLF);
     printf(CRLF);
 
-    printf("  -q quality                   [0.0 - 1.0) : quality" CRLF);
-    printf("  or quantization              [1   - 255] : quantization" CRLF);
-    printf("                               Default is lossless (1.0 quality or 1 quantization)" CRLF);
+    printf("  -q quality                   [0.0 - 1.0) Default = 1.0, lossless" CRLF);
+    printf("  or quantization              [1   - 255] Default = 1, lossless" CRLF);
     printf(CRLF);
 
     printf("  -c format                    Required to define uncompressed source pixel format" CRLF);
@@ -125,11 +124,13 @@ void WmpEncAppUsage(const char* szExe)
     printf("                               1: YCoCg 4:2:0" CRLF);
     printf("                               2: YCoCg 4:2:2" CRLF);
     printf("                               3: YCoCg 4:4:4 (default)" CRLF);
+    printf("     (if not set is 4:4:4 for quality >= 0.5 or 4:2:0 for quality < 0.5)" CRLF);
     printf(CRLF);
 
     printf("  -l overlapping               0: No overlapping" CRLF);
     printf("                               1: One level overlapping (default)" CRLF);
     printf("                               2: Two level overlapping" CRLF);
+    printf("     (if not set is One for quality > 0.4 or Two for quality <= 0.4)" CRLF);
     printf(CRLF);
 
     printf("  -f                           Turn off frequency order bit stream (to spatial)" CRLF);
@@ -140,11 +141,11 @@ void WmpEncAppUsage(const char* szExe)
     printf(CRLF);
     printf("  -v                           Display verbose encoder information" CRLF);
     printf(CRLF);
-    printf("  -V tile_wd0 [tile_wd1 ... ]  Macro block rows per tile " CRLF);
+    printf("  -V tile_wd0 [tile_wd1 ... ]  Macro block columns per tile " CRLF);
     printf(CRLF);
-    printf("  -H tile_ht0 [tile_ht1 ... ]  Macro block columns per tile" CRLF);
+    printf("  -H tile_ht0 [tile_ht1 ... ]  Macro block rows per tile" CRLF);
     printf(CRLF);
-    printf("  -U num_h_tiles num_v_tiles   Horiz & vert tile count for uniform tiling" CRLF);
+    printf("  -U num_v_tiles num_h_tiles   Vertical & horizontal tile count for uniform tiling" CRLF);
     printf(CRLF);
 
     printf("  -b Black/White               Applies to 1bpp black/white images" CRLF);
@@ -158,9 +159,7 @@ void WmpEncAppUsage(const char* szExe)
     printf("                               Other: Reserved, do not use" CRLF);
     printf(CRLF);
 
-    printf("  -Q quality                   [0.0 - 1.0) : quality" CRLF);
-    printf("  or quantization              [1   - 255] : quantization" CRLF);
-    printf("  for alpha                    Default is lossless (1.0 quality or 1 quantization)" CRLF);
+    printf("  -Q quantization for alpha    [1 - 255] Default = 1, lossless" CRLF);
     printf(CRLF);
 
     printf("  -F trimmed flexbits          [0 - 15]  0: no trimming (default)" CRLF);    
@@ -177,11 +176,15 @@ void WmpEncAppUsage(const char* szExe)
 void WmpEncAppShowArgs(WMPENCAPPARGS* args)
 {
     const char *szCF[] = {"Y_ONLY", "YUV_420", "YUV_422", "YUV_444", "CMYK"};
+
+	GUID guidPF = args->guidPixFormat;
     
     printf("================================" CRLF);
     printf("Input file:   %s" CRLF, args->szInputFile);
     printf("Output file:  %s" CRLF, args->szOutputFile);
-    printf("Color format: %x" CRLF, args->guidPixFormat);
+    printf("Color format: %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X" CRLF, 
+        guidPF.Data1, guidPF.Data2, guidPF.Data3, guidPF.Data4[0], guidPF.Data4[1], guidPF.Data4[2],
+        guidPF.Data4[3], guidPF.Data4[4], guidPF.Data4[5], guidPF.Data4[6], guidPF.Data4[7]);
     printf("Internal cf:  %s" CRLF, szCF[args->wmiSCP.cfColorFormat]);
     printf("Overlap:      %s" CRLF, 0 < args->wmiSCP.olOverlap ? "yes" : "no");
     printf("DCOverlap:    %s" CRLF, 1 < args->wmiSCP.olOverlap ? "yes" : "no");
@@ -202,7 +205,7 @@ void WmpEncAppInitDefaultArgs(WMPENCAPPARGS* args)
     args->wmiSCP.bdBitDepth = BD_LONG;
     args->wmiSCP.bfBitstreamFormat = FREQUENCY;
     args->wmiSCP.bProgressiveMode = TRUE;
-    args->wmiSCP.olOverlap = OL_NONE;
+    args->wmiSCP.olOverlap = OL_ONE;
     args->wmiSCP.cNumOfSliceMinus1H = args->wmiSCP.cNumOfSliceMinus1V = 0;
     args->wmiSCP.sbSubband = SB_ALL;
     args->wmiSCP.uAlphaMode = 0;
@@ -210,8 +213,8 @@ void WmpEncAppInitDefaultArgs(WMPENCAPPARGS* args)
     args->wmiSCP.uiDefaultQPIndexAlpha = 1;
 
     args->fltImageQuality = 1.f;
-    args->fltAlphaQuality = 1.f;
     args->bOverlapSet = 0;
+    args->bColorFormatSet = 0;
 }
 
 ERR WmpEncAppValidateArgs(WMPENCAPPARGS* args)
@@ -338,11 +341,7 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
                         break;
 
                     case 'Q':
-                        {
-                            args->fltAlphaQuality = (float) atof(argv[i]);
-                            if (args->fltAlphaQuality < 0.f || args->fltAlphaQuality > 255.f)
-                                Call(WMP_errInvalidArgument);
-                        }
+                        args->wmiSCP.uiDefaultQPIndexAlpha = (U8)(atoi(argv[i]));
                         break;
 
                     case 's':
@@ -376,12 +375,13 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
 
                     case 'd':
                         args->wmiSCP.cfColorFormat = (COLORFORMAT)atoi(argv[i]);
+                        args->bColorFormatSet = 1;
                         break;
                     
                     case 'H': // horizontal tiling
                         for(j = 0;;i ++, j ++){
                             args->wmiSCP.uiTileY[j] = atoi(argv[i]);
-                            if(i + 1 == argc || argv[i + 1][0] == '-' || j >= 255)
+                            if(i + 1 == argc || argv[i + 1][0] == '-' || j >= MAX_TILES-1)
                                 break;
                         }
                         args->wmiSCP.cNumOfSliceMinus1H = (U8)j;
@@ -390,7 +390,7 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
                     case 'V': // vertical tiling
                         for(j = 0;;i ++, j ++){
                             args->wmiSCP.uiTileX[j] = atoi(argv[i]);
-                            if(i + 1 == argc || argv[i + 1][0] == '-' || j >= 255)
+                            if(i + 1 == argc || argv[i + 1][0] == '-' || j >= MAX_TILES-1)
                                 break;
                         }
                         args->wmiSCP.cNumOfSliceMinus1V = (U8)j;
@@ -462,6 +462,20 @@ Cleanup:
 
 
 // Y, U, V, YHP, UHP, VHP
+int DPK_QPS_420[12][6] = {      // for 8 bit only
+    { 66, 65, 70, 72, 72, 77 },
+    { 59, 58, 63, 64, 63, 68 },
+    { 52, 51, 57, 56, 56, 61 },
+    { 48, 48, 54, 51, 50, 55 },
+    { 43, 44, 48, 46, 46, 49 },
+    { 37, 37, 42, 38, 38, 43 },
+    { 26, 28, 31, 27, 28, 31 },
+    { 16, 17, 22, 16, 17, 21 },
+    { 10, 11, 13, 10, 10, 13 },
+    {  5,  5,  6,  5,  5,  6 },
+    {  2,  2,  3,  2,  2,  2 }
+};
+
 int DPK_QPS_8[12][6] = {
     { 67, 79, 86, 72, 90, 98 },
     { 59, 74, 80, 64, 83, 89 },
@@ -591,6 +605,9 @@ main(int argc, char* argv[])
         if ((PI.grBit & PK_pixfmtHasAlpha) && args.wmiSCP.uAlphaMode == 0)
             args.wmiSCP.uAlphaMode = 2; // with Alpha and no default, set default as Planar
 
+        FailIf(PI.uSamplePerPixel > 1 && PI.uBitsPerSample > 8 && args.wmiSCP.cfColorFormat != YUV_444,
+            WMP_errInvalidArgument);
+
         //================================
         Call(pCodecFactory->CreateFormatConverter(&pConverter));
         Call(pConverter->Initialize(pConverter, pDecoder, pExt, args.guidPixFormat));
@@ -616,9 +633,9 @@ main(int argc, char* argv[])
         Call(pEncoder->Initialize(pEncoder, pEncodeStream, &args.wmiSCP, sizeof(args.wmiSCP)));
 
 	    //ImageQuality  Q (BD==1)  Q (BD==8)   Q (BD==16)  Q (BD==32F) Subsample   Overlap
-	    //[0.0, 0.4]    8-IQ*5     (see table) 180-IQ*100  30-IQ*25    4:4:4       2
-	    //(0.4, 0.8)    8-IQ*5     (see table) 180-IQ*100  30-IQ*25    4:4:4       1
-	    //[0.8, 1.0)    8-IQ*5     (see table) 260-IQ*200  30-IQ*25    4:4:4       1
+	    //[0.0, 0.4]    8-IQ*5     (see table) (see table) (see table) 4:4:4       2
+	    //(0.4, 0.8)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
+	    //[0.8, 1.0)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
 	    //[1.0, 1.0]    1          1           1           1           4:4:4       0
 	
         if (args.fltImageQuality < 1.0F)
@@ -629,6 +646,14 @@ main(int argc, char* argv[])
 			        pEncoder->WMP.wmiSCP.olOverlap = OL_ONE;
 		        else
 			        pEncoder->WMP.wmiSCP.olOverlap = OL_TWO;
+            }
+
+            if (!args.bColorFormatSet)
+            {
+		        if (args.fltImageQuality >= 0.5F || PI.uBitsPerSample > 8)
+			        pEncoder->WMP.wmiSCP.cfColorFormat = YUV_444;
+		        else
+			        pEncoder->WMP.wmiSCP.cfColorFormat = YUV_420;
             }
 
 		    if (PI.bdBitDepth == BD_1)
@@ -643,16 +668,21 @@ main(int argc, char* argv[])
                 int qi;
                 float qf;
                 int* pQPs;
-                if (args.fltImageQuality > 0.8f && PI.bdBitDepth == BD_8)
+                if (args.fltImageQuality > 0.8f && PI.bdBitDepth == BD_8 &&
+                    pEncoder->WMP.wmiSCP.cfColorFormat != YUV_420 &&
+                    pEncoder->WMP.wmiSCP.cfColorFormat != YUV_422)
                     args.fltImageQuality = 0.8f + (args.fltImageQuality - 0.8f) * 1.5f;
 
                 qi = (int) (10.f * args.fltImageQuality);
                 qf = 10.f * args.fltImageQuality - (float) qi;
 
                 pQPs =
-                    PI.bdBitDepth == BD_8 ? DPK_QPS_8[qi] :
+                    (pEncoder->WMP.wmiSCP.cfColorFormat == YUV_420 ||
+                     pEncoder->WMP.wmiSCP.cfColorFormat == YUV_422) ?
+                        DPK_QPS_420[qi] :
+                    (PI.bdBitDepth == BD_8 ? DPK_QPS_8[qi] :
                     (PI.bdBitDepth == BD_16 ? DPK_QPS_16[qi] :
-                    ((PI.bdBitDepth == BD_16F ? DPK_QPS_16f[qi] :
+                    (PI.bdBitDepth == BD_16F ? DPK_QPS_16f[qi] :
                     DPK_QPS_32f[qi])));
 
                 pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8) (0.5f +
@@ -674,59 +704,8 @@ main(int argc, char* argv[])
             pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8) args.fltImageQuality;
         }
 
-        if(pEncoder->WMP.wmiSCP.uAlphaMode != 0)
-        {
-            if (args.fltAlphaQuality < 1.0F)
-	        {
-                if (!args.bOverlapSet)
-                {
-		            if (args.fltAlphaQuality > 0.4F)
-			            pEncoder->WMP.wmiSCP_Alpha.olOverlap = OL_ONE;
-		            else
-			            pEncoder->WMP.wmiSCP_Alpha.olOverlap = OL_TWO;
-                }
-
-		        if (PI.bdBitDepth == BD_8)
-		        {
-                    // remap [0.8, 0.866, 0.933, 1.0] to [0.8, 0.9, 1.0, 1.1]
-                    // to use DPK QP table
-                    int qi;
-                    float qf;
-                    if (args.fltAlphaQuality > 0.8f)
-                        args.fltAlphaQuality = 0.8f + (args.fltAlphaQuality - 0.8f) * 1.5f;
-
-                    qi = (int) (10.f * args.fltAlphaQuality);
-                    qf = 10.f * args.fltAlphaQuality - (float) qi;
-                    pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = (U8) (0.5f +
-                            (float) DPK_QPS_8[qi][0] * (1.f - qf) + (float) DPK_QPS_8[qi + 1][0] * qf);
-		        }
-		        else if (PI.bdBitDepth == BD_16)
-		        {
-			        if (args.fltAlphaQuality >= 0.8F)
-				        pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8)(260 - 200.0F *
-					        args.fltAlphaQuality + 0.5F);
-			        else
-				        pEncoder->WMP.wmiSCP.uiDefaultQPIndex = (U8)(180 - 100.0F *
-					        args.fltAlphaQuality + 0.5F);
-		        }
-		        else if (PI.bdBitDepth == BD_32F)
-		        {
-			        pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = (U8)(30 - 25.0F *
-				        args.fltAlphaQuality + 0.5F);
-                    pEncoder->WMP.wmiSCP_Alpha.cfColorFormat = YUV_444; // spec says float must be YUV 444
-		        }
-		        else
-                {
-                    pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = 1; // Default to lossless
-                }
-            }
-            else
-            {
-                pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = (U8) args.fltAlphaQuality;
-            }
-
-            args.wmiSCP.uiDefaultQPIndexAlpha = pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex;
-        }
+        if(pEncoder->WMP.wmiSCP.uAlphaMode == 2)
+            pEncoder->WMP.wmiSCP_Alpha.uiDefaultQPIndex = args.wmiSCP.uiDefaultQPIndexAlpha;
 
         Call(pEncoder->SetPixelFormat(pEncoder, args.guidPixFormat));
 
@@ -764,89 +743,3 @@ Cleanup:
     
     return (int)err;
 }
-
-
-//================================================================
-#ifdef _WIN32_WCE
-/*
-#==============
-# comments
-#==============
-WMPEncApp.exe -i \Temp\test.bmp -o \Temp\test.jxr -q 1
-WMPDecApp.exe -i \Temp\test.jxr -o \Temp\test.bmp -c 6
-*/
-
-#define DEFDIR "\\Temp\\"
-
-int GetArguments(int* pc, char** ppv[])
-{
-    size_t i = 0;
-    static char line[132];
-    static char* args[20] =
-    {
-        "WMPEncApp.exe",
-        "-i",
-        DEFDIR "test.bmp",
-        "-o",
-        DEFDIR "test.jxr", 
-        "-q",
-        "1",
-        "-v",
-        "-t",
-        NULL,
-    };
-
-    FILE* pfIn = fopen(DEFDIR "WMPIni.txt", "r");
-
-    // default arguments to return
-    *pc = 9;
-    *ppv = args;
-
-    while (fgets(line, sizeof2(line), pfIn))
-    {
-        // search for the matching line
-        if (0 == strcmp(strtok(line, " \t"), args[0]))
-        {
-            // extract each argument from the matching line
-            for (i = 1; i < sizeof2(args) - 1 && (args[i] = strtok(NULL, " \t\n\r")); ++i);
-            *pc = i;
-
-            printf("Args from WMPIni.txt" CRLF);
-            break;
-        }
-    }
-
-    fclose(pfIn);
-
-    for (i = 0; i < (size_t)*pc; printf("%s ", args[i++]));
-    puts("");
-    return 0;
-}
-
-//================================================================
-// Windows CE App entry
-//================================================================
-int WINAPI WinMain(HINSTANCE    hInstance,
-                   HINSTANCE    hPrevInstance,
-                   LPTSTR       lpCmdLine,
-                   int          nCmdShow)
-{
-    int argc = 0;
-    char** argv = NULL;
-    
-    //================================
-    // redirect stdou and stderr
-    fclose(stdout);
-    fopen(DEFDIR "stdout.txt", "wb");
-
-    fclose(stderr);
-    fopen(DEFDIR "stderr.txt", "wb");
-
-    //================================
-    GetArguments(&argc, &argv);
-
-    //================================
-    return main(argc, argv);
-}
-#endif
-

@@ -195,10 +195,14 @@ void WmpDecAppUsage(const char* szExe)
 
 void WmpDecAppShowArgs(WMPDECAPPARGS* args)
 {
+	GUID guidPF = args->guidPixFormat;
+
     printf("================================" CRLF);
     printf("Input file:     %s" CRLF, args->szInputFile);
     printf("Output file:    %s" CRLF, args->szOutputFile);
-    printf("Color format:   %x" CRLF, args->guidPixFormat);
+    printf("Color format:   %08X-%04X-%04X-%02X%02X%02X%02X%02X%02X%02X%02X" CRLF, 
+        guidPF.Data1, guidPF.Data2, guidPF.Data3, guidPF.Data4[0], guidPF.Data4[1], guidPF.Data4[2],
+        guidPF.Data4[3], guidPF.Data4[4], guidPF.Data4[5], guidPF.Data4[6], guidPF.Data4[7]);
     printf("Post processing strength: %d" CRLF, args->cPostProcStrength);
     printf("Thumbnail:      %d" CRLF, (int) args->tThumbnailFactor);
     printf("================================" CRLF);
@@ -638,81 +642,3 @@ Cleanup:
     
     return (int)err;
 }
-
-
-//================================================================
-#ifdef _WIN32_WCE
-#define DEFDIR "\\Temp\\"
-
-int GetArguments(int* pc, char** ppv[])
-{
-    size_t i = 0;
-    static char line[132];
-    static char* args[20] =
-    {
-        "WMPDecApp.exe",
-        "-i",
-        DEFDIR "test.jxr",
-        "-o",
-        DEFDIR "test.bmp",
-        "-c",
-        "0",
-        "-v",
-        "-t",
-        NULL,
-    };
-
-    FILE* pfIn = fopen(DEFDIR "WMPIni.txt", "r");
-
-    // default arguments to return
-    *pc = 9;
-    *ppv = args;
-
-    while (fgets(line, sizeof2(line), pfIn))
-    {
-        // search for the matching line
-        if (0 == strcmp(strtok(line, " \t"), args[0]))
-        {
-            // extract each argument from the matching line
-            for (i = 1; i < sizeof2(args) - 1 && (args[i] = strtok(NULL, " \t\n\r")); ++i);
-            *pc = i;
-
-            printf("Args from WMPIni.txt" CRLF);
-            break;
-        }
-    }
-
-    fclose(pfIn);
-
-    for (i = 0; i < (size_t)*pc; printf("%s ", args[i++]));
-    puts("");
-    return 0;
-}
-
-//================================================================
-// Windows CE App entry
-//================================================================
-int WINAPI WinMain(HINSTANCE    hInstance,
-                   HINSTANCE    hPrevInstance,
-                   LPTSTR       lpCmdLine,
-                   int          nCmdShow)
-{
-    int argc = 0;
-    char** argv = NULL;
-
-    //================================
-    // redirect stdou and stderr
-    fclose(stdout);
-    fopen(DEFDIR "stdout.txt", "wb");
-
-    fclose(stderr);
-    fopen(DEFDIR "stderr.txt", "wb");
-
-    //================================
-    GetArguments(&argc, &argv);
-
-    //================================
-    return main(argc, argv);
-}
-#endif
-
