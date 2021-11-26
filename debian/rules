@@ -36,7 +36,7 @@ debian/JxrEncApp.1: debian/JxrEncApp.1.in
 debian/JPEGXR_DPK_Spec_1.0.txt: doc/JPEGXR_DPK_Spec_1.0.doc
 	antiword $< > $@
 
-override_dh_installman:
+override_dh_installman: debian/JxrEncApp.1 debian/JxrDecApp.1
 	dh_installman -p$(pkg_bin) debian/JxrDecApp.1
 	dh_installman -p$(pkg_bin) debian/JxrEncApp.1
 
