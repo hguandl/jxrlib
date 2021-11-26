@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Source: https://jxrlib.codeplex.com/
+Upstream-Source: https://github.com/4creators/jxrlib
 Upstream-Name: jxrlib
 
 Files: *
