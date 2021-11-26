@@ -1,3 +1,10 @@
+jxrlib (1.1-8) unstable; urgency=medium
+
+  * d/rules: Really remove old -dbg package
+  * d/manpages: Refresh man pages
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 26 Nov 2021 15:22:12 +0100
+
 jxrlib (1.1-7) unstable; urgency=medium
 
   * debian/control: update URLs to new salsa location
