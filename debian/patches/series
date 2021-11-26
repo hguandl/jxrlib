@@ -3,3 +3,4 @@ typos.patch
 cp1251.patch
 bug771912.patch
 bug803743.patch
+bump_version.patch

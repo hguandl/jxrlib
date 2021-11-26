@@ -46,6 +46,15 @@ Index: jxrlib/CMakeLists.txt
  set_property(TARGET jpegxr PROPERTY SOVERSION 0)
  install(TARGETS jpegxr
    EXPORT JXRLibTargets
+@@ -94,7 +96,7 @@ set_property(TARGET jxrglue
+ #set_property(TARGET jxrglue PROPERTY LINK_INTERFACE_LIBRARIES "")
+ set_property(TARGET jxrglue PROPERTY COMPILE_FLAGS -w)
+ # VERSION/SOVERSION
+-set_property(TARGET jxrglue PROPERTY VERSION 1.1)
++set_property(TARGET jxrglue PROPERTY VERSION ${JXR_VERSION})
+ set_property(TARGET jxrglue PROPERTY SOVERSION 0)
+ install(TARGETS jxrglue
+   EXPORT JXRLibTargets
 @@ -133,3 +135,12 @@ install(FILES jxrgluelib/JXRGlue.h jxrgl
  install(DIRECTORY common/include/ DESTINATION ${JXRLIB_INSTALL_INCLUDE_DIR}
    FILES_MATCHING PATTERN "*.h"
