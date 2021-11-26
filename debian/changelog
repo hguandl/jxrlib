@@ -1,3 +1,16 @@
+jxrlib (1.2~git20170615.f752187-1) unstable; urgency=medium
+
+  * d/rules: Remove old get-orig-source logic
+  * New upstream version 1.2~git20170615.f752187
+  * d/patches: Refresh patches
+  * d/symbols: Update symbols file to latest release
+  * d/patches: Fix some national-encoding lintian warnings
+  * d/rules: Generate man pages during build
+  * d/patches: Document PNM output. Closes: #771912
+  * d/rules: libjxr-dev: Missing pkgconfig file. Closes: #803743
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 26 Nov 2021 16:53:43 +0100
+
 jxrlib (1.1-8) unstable; urgency=medium
 
   * d/rules: Really remove old -dbg package
