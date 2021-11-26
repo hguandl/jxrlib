@@ -17,7 +17,6 @@ override_dh_auto_configure:
 pkg_bin=libjxr-tools
 pkg_lib=libjxr0
 pkg_dev=libjxr-dev
-pkg_dbg=libjxr-dbg
 
 override_dh_install:
 	# bin
@@ -45,9 +44,6 @@ override_dh_installdocs:
 	dh_installdocs doc/readme.txt
 	dh_installdocs debian/JPEGXR_DPK_Spec_1.0.txt
 	dh_installdocs
-
-override_dh_strip:
-	dh_strip --dbg-package=$(pkg_dbg)
 
 get-orig-source:
 	#uscan --verbose --force-download --rename
