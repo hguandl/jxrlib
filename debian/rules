@@ -46,5 +46,4 @@ override_dh_installdocs:
 	dh_installdocs
 
 get-orig-source:
-	#uscan --verbose --force-download --rename
-	./debian/get-orig-source
+	uscan --download --force-download --rename
