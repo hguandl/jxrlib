@@ -1,3 +1,14 @@
+jxrlib (1.1-7) unstable; urgency=medium
+
+  * debian/control: update URLs to new salsa location
+  * d/compat: Switch to compat 10
+  * d/control: Remove -dbg package
+  * d/rules: Remove explicit --parallel flag
+  * d/control: Remove URL referencing codeplex
+  * d/copyright: Fix two lintian warnings
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 26 Nov 2021 14:12:39 +0100
+
 jxrlib (1.1-6) unstable; urgency=medium
 
   * Update d/control to reference cli tools names.
