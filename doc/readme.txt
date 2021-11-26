@@ -28,9 +28,6 @@ file format and compression technology.
 Assuming the installation dir is C:\jxrlib, all the paths mentioned below are 
 relative to this base path.
 
-   The Visual Studio 2010 main solution is:
-   jxrencoderdecoder\JXR.sln
-
    The Visual Studio 2012 main solution is:
    jxrencoderdecoder\JXR_vc11.sln
 
@@ -39,12 +36,20 @@ relative to this base path.
    jxrencoderdecoder\Debug\JXREncApp\JXREncApp.exe
 
 The main directory contains a Unix/Linux compatible make file for building the
-encoder and decoder, including support for big endian or little endian processor
-architecture.  It is the developer's responsibility to properly organize all the 
-source files according to the paths defined in this make file for its correct 
-operation.  This is provided as a convenience for cross-platform developers and 
-to demonstrate the correct operation of the encoder and decoder on big endian 
-systems.
+encoder and decoder, and associated libraries, including support for big endian
+or little endian processor architecture by setting BIG_ENDIAN=1 at build time.
+It is the developer's responsibility to properly organize all the source files
+according to the paths defined in this make file for its correct operation.
+This is provided as a convenience for cross-platform developers and to demonstrate
+the correct operation of the encoder and decoder on big endian systems.
+
+To build static libraries:
+
+   make
+
+To build shared libraries:
+
+   make SHARED=1
 
 The JPEG XR Image Coding Spectification provides a detailed specification of the 
 compression encoder and decoder algorithms plus the detailed structure of the 

@@ -58,7 +58,7 @@ void WmpEncAppUsage(const char* szExe)
     printf("  -i input.bmp/tif/hdr         Input image file name" CRLF);
     printf("                               bmp: <=8bpc, BGR" CRLF);
     printf("                               tif: >=8bpc, RGB" CRLF);
-    printf("                               hdr: 24bppRGBE only" CRLF);
+    printf("                               hdr: 32bppRGBE only" CRLF);
     printf(CRLF);
 
     printf("  -o output.jxr                Output JPEG XR file name" CRLF);
@@ -130,7 +130,7 @@ void WmpEncAppUsage(const char* szExe)
     printf("  -l overlapping               0: No overlapping" CRLF);
     printf("                               1: One level overlapping (default)" CRLF);
     printf("                               2: Two level overlapping" CRLF);
-    printf("     (if not set is One for quality > 0.4 or Two for quality <= 0.4)" CRLF);
+    printf("     (if not set is One for quality >= 0.5 or Two for quality < 0.5)" CRLF);
     printf(CRLF);
 
     printf("  -f                           Turn off frequency order bit stream (to spatial)" CRLF);
@@ -170,7 +170,7 @@ void WmpEncAppUsage(const char* szExe)
     printf("                               2: Skip highpass" CRLF);    
     printf("                               3: Skip highpass & lowpass (DC only)" CRLF);    
     printf(CRLF);
-    printf("Eg: %s -i input.bmp -o output.jxr -q 10" CRLF, szExe);
+    printf("Eg: %s -i input.bmp -o output.jxr -q 0.9" CRLF, szExe);
 }
 
 void WmpEncAppShowArgs(WMPENCAPPARGS* args)
@@ -457,12 +457,18 @@ ERR WmpEncAppParseArgs(int argc, char* argv[], WMPENCAPPARGS* args)
     Call(WmpEncAppValidateArgs(args));
 
 Cleanup:
+    if (WMP_errSuccess != err)
+    {
+        WmpEncAppUsage(argv[0]);
+    }
     return err;
 }
 
 
 // Y, U, V, YHP, UHP, VHP
-int DPK_QPS_420[12][6] = {      // for 8 bit only
+#if 1
+// optimized for PSNR
+int DPK_QPS_420[11][6] = {      // for 8 bit only
     { 66, 65, 70, 72, 72, 77 },
     { 59, 58, 63, 64, 63, 68 },
     { 52, 51, 57, 56, 56, 61 },
@@ -490,6 +496,37 @@ int DPK_QPS_8[12][6] = {
     {  7, 17, 21,  8, 17, 21 }, // Photoshop 100%
     {  2,  5,  6,  2,  5,  6 }
 };
+#else
+// optimized for SSIM
+int DPK_QPS_420[11][6] = {      // for 8 bit only
+    { 67, 77, 80, 75, 82, 86 },
+    { 58, 67, 71, 63, 74, 78 },
+    { 50, 60, 64, 54, 66, 69 },
+    { 46, 55, 59, 49, 60, 63 },
+    { 41, 48, 53, 43, 52, 56 },
+    { 35, 43, 48, 36, 44, 49 },
+    { 29, 37, 41, 30, 38, 41 },
+    { 22, 29, 33, 22, 29, 33 },
+    { 15, 20, 26, 14, 20, 25 },
+    {  9, 14, 18,  8, 14, 17 },
+    {  4,  6,  7,  3,  5,  5 }
+};
+
+int DPK_QPS_8[12][6] = {
+    { 67, 93, 98, 71, 98, 104 },
+    { 59, 83, 88, 61, 89,  95 },
+    { 50, 76, 81, 53, 85,  90 },
+    { 46, 71, 77, 47, 79,  85 },
+    { 41, 67, 71, 42, 75,  78 },
+    { 34, 59, 65, 35, 66,  72 },
+    { 30, 54, 60, 29, 60,  66 },
+    { 24, 48, 53, 22, 53,  58 },
+    { 18, 39, 45, 17, 43,  48 },
+    { 13, 34, 38, 11, 35,  38 },
+    {  8, 20, 24,  7, 22,  25 }, // Photoshop 100%
+    {  2,  5,  6,  2,  5,   6 }
+};
+#endif
 
 int DPK_QPS_16[11][6] = {
     { 197, 203, 210, 202, 207, 213 },
@@ -633,16 +670,16 @@ main(int argc, char* argv[])
         Call(pEncoder->Initialize(pEncoder, pEncodeStream, &args.wmiSCP, sizeof(args.wmiSCP)));
 
 	    //ImageQuality  Q (BD==1)  Q (BD==8)   Q (BD==16)  Q (BD==32F) Subsample   Overlap
-	    //[0.0, 0.4]    8-IQ*5     (see table) (see table) (see table) 4:4:4       2
-	    //(0.4, 0.8)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
-	    //[0.8, 1.0)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
+	    //[0.0, 0.5)    8-IQ*5     (see table) (see table) (see table) 4:2:0       2
+	    //[0.5, 1.0)    8-IQ*5     (see table) (see table) (see table) 4:4:4       1
 	    //[1.0, 1.0]    1          1           1           1           4:4:4       0
 	
         if (args.fltImageQuality < 1.0F)
 	    {
             if (!args.bOverlapSet)
             {
-		        if (args.fltImageQuality > 0.4F)
+                // Image width must be at least 2 MB wide for subsampled chroma and two levels of overlap!
+		        if (args.fltImageQuality >= 0.5F || rect.Width < 2 * MB_WIDTH_PIXEL)
 			        pEncoder->WMP.wmiSCP.olOverlap = OL_ONE;
 		        else
 			        pEncoder->WMP.wmiSCP.olOverlap = OL_TWO;
@@ -736,10 +773,5 @@ main(int argc, char* argv[])
     pEncoder->Release(&pEncoder);
 
 Cleanup:
-    if (WMP_errSuccess != err)
-    {
-        WmpEncAppUsage(argv[0]);
-    }
-    
     return (int)err;
 }
