@@ -2,11 +2,11 @@ Description: Prefer a cmake based build system
 Author: Mathieu Malaterre <malat@debian.org>
 Forwarded: https://jxrlib.codeplex.com/discussions/440294
 
-Index: jxrlib-1.1/CMakeLists.txt
+Index: jxrlib/CMakeLists.txt
 ===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ jxrlib-1.1/CMakeLists.txt	2014-03-26 17:05:04.429637801 +0100
-@@ -0,0 +1,134 @@
+--- /dev/null
++++ jxrlib/CMakeLists.txt
+@@ -0,0 +1,135 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)
 +cmake_minimum_required(VERSION 2.8)
@@ -100,7 +100,7 @@ Index: jxrlib-1.1/CMakeLists.txt
 +set_property(TARGET jxrglue
 +  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
 +)
-+set_property(TARGET jxrglue PROPERTY LINK_INTERFACE_LIBRARIES "")
++#set_property(TARGET jxrglue PROPERTY LINK_INTERFACE_LIBRARIES "")
 +set_property(TARGET jxrglue PROPERTY COMPILE_FLAGS -w)
 +# VERSION/SOVERSION
 +set_property(TARGET jxrglue PROPERTY VERSION 1.1)
@@ -113,14 +113,15 @@ Index: jxrlib-1.1/CMakeLists.txt
 +#if(HAVE_STRLCPY_BSD)
 +#	target_link_libraries(jxrglue ${BSD_LIBRARY})
 +#endif()
-+target_link_libraries(jxrglue jpegxr m)
++#target_link_libraries(jxrglue m)
++target_link_libraries(jxrglue PRIVATE jpegxr m)
 +# Enc app files
 +set(ENCAPP JxrEncApp)
 +add_executable(${ENCAPP} ${DIR_EXEC}/${ENCAPP}.c)
 +set_property(TARGET ${ENCAPP}
 +  PROPERTY COMPILE_DEFINITIONS __ANSI__ DISABLE_PERF_MEASUREMENT ${DEF_ENDIAN}
 +)
-+set_property(TARGET ${ENCAPP} PROPERTY COMPILE_FLAGS -w)
++#set_property(TARGET ${ENCAPP} PROPERTY COMPILE_FLAGS -w)
 +target_link_libraries(${ENCAPP} jxrglue) # jpegxr)
 +install(TARGETS ${ENCAPP} RUNTIME DESTINATION ${JXRLIB_INSTALL_BIN_DIR})
 +# Dec app files
