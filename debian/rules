@@ -24,6 +24,7 @@ override_dh_install:
 	# lib
 	dh_install -p$(pkg_lib) usr/lib/$(DEB_HOST_MULTIARCH)/*.so.*
 	# dev
+	dh_install -p$(pkg_dev) usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/*.pc
 	dh_install -p$(pkg_dev) usr/lib/$(DEB_HOST_MULTIARCH)/*.so
 	dh_install -p$(pkg_dev) usr/include
 
