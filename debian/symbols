@@ -430,13 +430,18 @@ libjxrglue.so.0 libjxr0 #MINVER#
  PKImageDecode_GetColorContext_WMP@Base 1.0
  PKImageDecode_GetDescriptiveMetadata@Base 1.0
  PKImageDecode_GetDescriptiveMetadata_WMP@Base 1.0
+ PKImageDecode_GetEXIFMetadata_WMP@Base 1.2~git20170615.f752187
  PKImageDecode_GetFrameCount@Base 1.0
+ PKImageDecode_GetGPSInfoMetadata_WMP@Base 1.2~git20170615.f752187
+ PKImageDecode_GetIPTCNAAMetadata_WMP@Base 1.2~git20170615.f752187
  PKImageDecode_GetMetadata_WMP@Base 1.0
+ PKImageDecode_GetPhotoshopMetadata_WMP@Base 1.2~git20170615.f752187
  PKImageDecode_GetPixelFormat@Base 1.0
  PKImageDecode_GetRawStream_WMP@Base 1.0
  PKImageDecode_GetResolution@Base 1.0
  PKImageDecode_GetSize@Base 1.0
  PKImageDecode_GetSize_WMP@Base 1.0
+ PKImageDecode_GetXMPMetadata_WMP@Base 1.2~git20170615.f752187
  PKImageDecode_Initialize@Base 1.0
  PKImageDecode_Initialize_BMP@Base 1.0
  PKImageDecode_Initialize_HDR@Base 1.0
