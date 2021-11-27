@@ -9,7 +9,7 @@ Index: jxrlib/CMakeLists.txt
 @@ -0,0 +1,135 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)
-+cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.13)
 +project(jxrlib C)
 +
 +# Need shared libs for ABI
