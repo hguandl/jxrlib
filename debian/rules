@@ -29,10 +29,10 @@ override_dh_install:
 	dh_install -p$(pkg_dev) usr/include
 
 debian/JxrDecApp.1: debian/JxrDecApp.1.in
-	help2man --version-string=$(VER_FULL) --include=$< --output=$@ --no-info JxrDecApp
+	LD_PRELOAD= LD_LIBRARY_PATH=./debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) help2man --version-string=$(VER_FULL) --include=$< --output=$@ --no-info ./debian/tmp/usr/bin/JxrDecApp
 
 debian/JxrEncApp.1: debian/JxrEncApp.1.in
-	help2man --version-string=$(VER_FULL) --include=$< --output=$@ --no-info JxrEncApp
+	LD_PRELOAD= LD_LIBRARY_PATH=./debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH) help2man --version-string=$(VER_FULL) --include=$< --output=$@ --no-info ./debian/tmp/usr/bin/JxrEncApp
 
 debian/JPEGXR_DPK_Spec_1.0.txt: doc/JPEGXR_DPK_Spec_1.0.doc
 	antiword $< > $@
