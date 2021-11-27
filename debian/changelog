@@ -1,3 +1,9 @@
+jxrlib (1.2~git20170615.f752187-3) unstable; urgency=medium
+
+  * d/rules: Properly generate man pages
+
+ -- Mathieu Malaterre <malat@debian.org>  Sat, 27 Nov 2021 16:54:36 +0100
+
 jxrlib (1.2~git20170615.f752187-2) unstable; urgency=medium
 
   * d/patches: Bump version to 1.2
