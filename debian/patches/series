@@ -6,3 +6,4 @@ bug803743.patch
 bump_version.patch
 pkg-config.patch
 pie.patch
+082bb032be1f6c75173bf603252e4f37bfded9fa.patch
