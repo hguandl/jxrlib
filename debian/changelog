@@ -1,3 +1,24 @@
+jxrlib (1.2~git20170615.f752187-4) unstable; urgency=medium
+
+  [ Mathieu Malaterre ]
+  * d/control: Switch to group maintainance
+  * d/control: Update cmake version to 3.13 to remove a warning
+  * d/compat: Bump compat to 12
+
+  [ Yann Leprince ]
+  * d/patches: Fix libjxr.pc include path. Closes: #1002449
+
+  [ Mathieu Malaterre ]
+  * d/control: Add missing Rules-Requires-Root: no
+  * d/copyright: Update years, also prefer https
+  * d/binaries: Declare doc file to be binary
+  * d/rules: Stop using dpkg-parsechangelog
+  * d/lintian-overrides: Remove bogus entry
+  * d/symbols: Add missing Build-Depends-Package line
+  * d/rules: Start building txt from doc automatically
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 28 Jan 2022 11:23:18 +0100
+
 jxrlib (1.2~git20170615.f752187-3) unstable; urgency=medium
 
   * d/rules: Properly generate man pages
