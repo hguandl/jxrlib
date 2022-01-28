@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Source: https://github.com/4creators/jxrlib
 Upstream-Name: jxrlib
 Files-Excluded: bin
@@ -28,6 +28,6 @@ License: BSD-2-clause
  POSSIBILITY OF SUCH DAMAGE.
 
 Files: debian/*
-Copyright: 2013, Mathieu Malaterre <malat@debian.org>
+Copyright: 2013-2022, Mathieu Malaterre <malat@debian.org>
 License: BSD-2-clause
  Same as above
