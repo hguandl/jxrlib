@@ -5,3 +5,4 @@ bug771912.patch
 bug803743.patch
 bump_version.patch
 pkg-config.patch
+pie.patch
