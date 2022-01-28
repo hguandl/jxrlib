@@ -4,6 +4,7 @@
 include /usr/share/dpkg/default.mk
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall -Wextra
 export DPKG_GENSYMBOLS_CHECK_LEVEL = 4
 
 VER_FULL = $(DEB_VERSION_UPSTREAM)
