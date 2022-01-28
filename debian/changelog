@@ -1,7 +1,25 @@
+jxrlib (1.2~git20170615.f752187-5) unstable; urgency=medium
+
+  [ Mathieu Malaterre ]
+  * d/copyright: Fix invalid utf-8 character
+  * d/patches: Make sure to fix lintian hardening-no-bindnow
+
+  [ Milian Wolff ]
+  * d/patches: Use mkstemp instead of tmpnam. Closes: #1001782
+  * d/patches: Fix memory leaks when handling OOM scenario
+  * d/patches: fix undefined behavior for left-shift of -1
+  * d/patches: fix warnings about unaligned loads from UBSAN
+
+  [ Mathieu Malaterre ]
+  * d/patches: Forward some patches upstream.
+  * d/rules: Add more warnings during compilation
+
+ -- Mathieu Malaterre <malat@debian.org>  Fri, 28 Jan 2022 13:55:06 +0100
+
 jxrlib (1.2~git20170615.f752187-4) unstable; urgency=medium
 
   [ Mathieu Malaterre ]
-  * d/control: Switch to group maintainance
+  * d/control: Switch to group maintenance
   * d/control: Update cmake version to 3.13 to remove a warning
   * d/compat: Bump compat to 12
 
