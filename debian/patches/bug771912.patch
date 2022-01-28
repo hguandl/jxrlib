@@ -1,7 +1,7 @@
 Description: Document PNM output
 Author: Mathieu Malaterre <malat@debian.org>
 Bug-Debian: https://bugs.debian.org/771912
-Forwarded: no
+Forwarded: https://github.com/4creators/jxrlib/pull/4
 Last-Update: 2021-11-26
 
 --- jxrlib-1.2~git20170615.f752187.orig/jxrencoderdecoder/JxrDecApp.c

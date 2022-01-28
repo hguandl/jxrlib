@@ -1,6 +1,6 @@
 Description: Version is 1.2
 Author: Mathieu Malaterre <malat@debian.org>
-Forwarded: no
+Forwarded: not-needed
 Last-Update: 2021-11-26
 
 --- jxrlib-1.2~git20170615.f752187.orig/CMakeLists.txt

@@ -1,6 +1,6 @@
 Description: lintian hardening-no-bindnow
 Author: Mathieu Malaterre <malat@debian.org>
-Forwarded: no
+Forwarded: not-needed
 Last-Update: 2022-01-28
 
 --- jxrlib-1.2~git20170615.f752187.orig/CMakeLists.txt
