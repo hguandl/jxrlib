@@ -54,6 +54,3 @@ override_dh_installdocs: debian/JPEGXR_DPK_Spec_1.0.txt
 	dh_installdocs doc/readme.txt
 	dh_installdocs debian/JPEGXR_DPK_Spec_1.0.txt
 	dh_installdocs
-
-get-orig-source:
-	uscan --download --force-download --rename
