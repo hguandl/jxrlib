@@ -11,7 +11,7 @@ Build-Depends: antiword,
 Homepage: https://github.com/4creators/jxrlib
 Vcs-Browser: https://salsa.debian.org/debian-phototools-team/jxrlib
 Vcs-Git: https://salsa.debian.org/debian-phototools-team/jxrlib.git
-Standards-Version: 4.6.1
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 
 Package: libjxr0
