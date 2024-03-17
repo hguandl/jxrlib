@@ -1,4 +1,4 @@
-libjpegxr.so.0 libjxr0 #MINVER#
+libjpegxr.so.0 libjxr0t64 #MINVER#
 * Build-Depends-Package: libjxr-dev
  AdaptDiscriminant@Base 1.0
  AdaptHighpassDec@Base 1.0
@@ -240,7 +240,7 @@ libjpegxr.so.0 libjxr0 #MINVER#
  writeTileHeaderDC@Base 1.0
  writeTileHeaderHP@Base 1.0
  writeTileHeaderLP@Base 1.0
-libjxrglue.so.0 libjxr0 #MINVER#
+libjxrglue.so.0 libjxr0t64 #MINVER#
 * Build-Depends-Package: libjxr-dev
  BGR24_BGR32@Base 1.0
  BGR24_Gray8@Base 1.0
