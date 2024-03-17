@@ -19,7 +19,7 @@ override_dh_auto_configure:
 	dh_auto_configure -- $(CMAKE_EXTRA_FLAGS)
 
 pkg_bin=libjxr-tools
-pkg_lib=libjxr0
+pkg_lib=libjxr0t64
 pkg_dev=libjxr-dev
 
 override_dh_install:

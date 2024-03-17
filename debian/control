@@ -3,7 +3,7 @@ Section: graphics
 Priority: optional
 Maintainer: Debian PhotoTools Maintainers <pkg-phototools-devel@lists.alioth.debian.org>
 Uploaders: Mathieu Malaterre <malat@debian.org>
-Build-Depends: antiword,
+Build-Depends: dpkg-dev (>= 1.22.5), antiword,
                cmake (>= 3.13),
                debhelper-compat (= 13),
                dpkg-dev (>= 1.18),
@@ -14,7 +14,10 @@ Vcs-Git: https://salsa.debian.org/debian-phototools-team/jxrlib.git
 Standards-Version: 4.6.0
 Rules-Requires-Root: no
 
-Package: libjxr0
+Package: libjxr0t64
+Provides: ${t64:Provides}
+Replaces: libjxr0
+Breaks: libjxr0 (<< ${source:Version})
 Section: libs
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -42,7 +45,7 @@ Package: libjxr-dev
 Architecture: any
 Section: libdevel
 Multi-Arch: same
-Depends: libjxr0 (= ${binary:Version}), ${misc:Depends}
+Depends: libjxr0t64 (= ${binary:Version}), ${misc:Depends}
 Description: JPEG-XR lib - dev files
  JPEG XR is an approved ISO/IEC International standard (its official
  designation is ISO/IEC 29199-2).
