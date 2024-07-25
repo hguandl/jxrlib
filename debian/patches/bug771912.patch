@@ -1,11 +1,19 @@
-Description: Document PNM output
-Author: Mathieu Malaterre <malat@debian.org>
+From: Mathieu Malaterre <malat@debian.org>
+Date: Fri, 26 Nov 2021 16:23:52 +0100
+Subject: Document PNM output
+
 Bug-Debian: https://bugs.debian.org/771912
 Forwarded: https://github.com/4creators/jxrlib/pull/4
 Last-Update: 2021-11-26
+---
+ jxrencoderdecoder/JxrDecApp.c | 3 ++-
+ jxrencoderdecoder/JxrEncApp.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- jxrlib-1.2~git20170615.f752187.orig/jxrencoderdecoder/JxrDecApp.c
-+++ jxrlib-1.2~git20170615.f752187/jxrencoderdecoder/JxrDecApp.c
+diff --git a/jxrencoderdecoder/JxrDecApp.c b/jxrencoderdecoder/JxrDecApp.c
+index 35fa10c..5779eb8 100644
+--- a/jxrencoderdecoder/JxrDecApp.c
++++ b/jxrencoderdecoder/JxrDecApp.c
 @@ -82,8 +82,9 @@ void WmpDecAppUsage(const char* szExe)
      printf(CRLF);
      printf("  -i input.jxr/wdp             Input JPEG XR/HD Photo file name" CRLF);
@@ -17,8 +25,10 @@ Last-Update: 2021-11-26
      printf("                               tif: >=8bpc, RGB" CRLF);
      printf("                               jxr: for compressed domain transcode" CRLF);
      printf(CRLF);
---- jxrlib-1.2~git20170615.f752187.orig/jxrencoderdecoder/JxrEncApp.c
-+++ jxrlib-1.2~git20170615.f752187/jxrencoderdecoder/JxrEncApp.c
+diff --git a/jxrencoderdecoder/JxrEncApp.c b/jxrencoderdecoder/JxrEncApp.c
+index 63cbaf8..b46c6c5 100644
+--- a/jxrencoderdecoder/JxrEncApp.c
++++ b/jxrencoderdecoder/JxrEncApp.c
 @@ -55,8 +55,9 @@ void WmpEncAppUsage(const char* szExe)
      printf(CRLF);
      printf("%s [options]..." CRLF, szExe);

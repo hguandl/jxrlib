@@ -1,11 +1,18 @@
-Description: Prefer a cmake based build system
-Author: Mathieu Malaterre <malat@debian.org>
-Forwarded: https://jxrlib.codeplex.com/discussions/440294
+From: Mathieu Malaterre <malat@debian.org>
+Date: Wed, 17 Apr 2013 16:08:34 +0200
+Subject: Prefer a cmake based build system
 
-Index: jxrlib/CMakeLists.txt
-===================================================================
+Forwarded: https://jxrlib.codeplex.com/discussions/440294
+---
+ CMakeLists.txt | 135 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 135 insertions(+)
+ create mode 100644 CMakeLists.txt
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..abd5e72
 --- /dev/null
-+++ jxrlib/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -0,0 +1,135 @@
 +# Copyright Mathieu Malaterre <malat@debian.org>
 +# BSD (Same as jxrlib)

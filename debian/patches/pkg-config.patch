@@ -1,21 +1,27 @@
-Description: Incorrect path to include directory in pkg-config (libjxr.pc)
- The pkg-config file for libjxr contains incorrect paths to the headers: it
- refers to paths used by the upstream Makefile (sub-directories of
- /usr/include/libjxr) whereas the Debian package actually installs the headers
- directly into a different directory (/usr/include/jxrlib). Therefore,
- packages that depend on jxrlib via the pkg-config file fail to build.
- .
- Original patch did not apply cleanly, rework it (malat)
-Author: Yann Leprince <yann.leprince@cea.fr>
+From: Yann Leprince <yann.leprince@cea.fr>
+Date: Fri, 28 Jan 2022 10:47:02 +0100
+Subject: Incorrect path to include directory in pkg-config (libjxr.pc)
+
 Reviewed-By: Mathieu Malaterre <malat@debian.org>
 Forwarded: no
 Last-Update: 2022-01-28
 
-Index: jxrlib/libjxr.pc.in
-===================================================================
---- jxrlib.orig/libjxr.pc.in
-+++ jxrlib/libjxr.pc.in
-@@ -9,4 +9,4 @@ Description: A library for reading JPEG
+The pkg-config file for libjxr contains incorrect paths to the headers: it
+refers to paths used by the upstream Makefile (sub-directories of
+/usr/include/libjxr) whereas the Debian package actually installs the headers
+directly into a different directory (/usr/include/jxrlib). Therefore,
+packages that depend on jxrlib via the pkg-config file fail to build.
+
+Original patch did not apply cleanly, rework it (malat)
+---
+ libjxr.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libjxr.pc.in b/libjxr.pc.in
+index 82c2fd5..1589204 100644
+--- a/libjxr.pc.in
++++ b/libjxr.pc.in
+@@ -9,4 +9,4 @@ Description: A library for reading JPEG XR images.
  Version: @JXR_VERSION@
  Libs: -L${libdir} -ljpegxr -ljxrglue
  Libs.private: -lm 

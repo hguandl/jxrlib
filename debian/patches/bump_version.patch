@@ -1,10 +1,17 @@
-Description: Version is 1.2
-Author: Mathieu Malaterre <malat@debian.org>
+From: Mathieu Malaterre <malat@debian.org>
+Date: Fri, 26 Nov 2021 17:15:11 +0100
+Subject: Version is 1.2
+
 Forwarded: not-needed
 Last-Update: 2021-11-26
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- jxrlib-1.2~git20170615.f752187.orig/CMakeLists.txt
-+++ jxrlib-1.2~git20170615.f752187/CMakeLists.txt
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 70d8bad..53203e2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
 @@ -74,7 +74,7 @@ set_property(TARGET jpegxr
  set_property(TARGET jpegxr PROPERTY LINK_INTERFACE_LIBRARIES "")
  set_property(TARGET jpegxr PROPERTY COMPILE_FLAGS -w)

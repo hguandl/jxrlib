@@ -1,10 +1,15 @@
-Description: Fix typos and remove some warnings
-Author: Mathieu Malaterre <malat@debian.org>
+From: Mathieu Malaterre <malat@debian.org>
+Date: Fri, 6 Nov 2015 21:57:27 +0100
+Subject: Fix typos and remove some warnings
 
-Index: jxrlib/jxrencoderdecoder/JxrEncApp.c
-===================================================================
---- jxrlib.orig/jxrencoderdecoder/JxrEncApp.c
-+++ jxrlib/jxrencoderdecoder/JxrEncApp.c
+---
+ jxrencoderdecoder/JxrEncApp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/jxrencoderdecoder/JxrEncApp.c b/jxrencoderdecoder/JxrEncApp.c
+index aa9de53..63cbaf8 100644
+--- a/jxrencoderdecoder/JxrEncApp.c
++++ b/jxrencoderdecoder/JxrEncApp.c
 @@ -615,7 +615,7 @@ main(int argc, char* argv[])
  
      //================================
