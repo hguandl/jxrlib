@@ -11,3 +11,5 @@ pie.patch
 a684f95783f2f81bd13bf1f8b03ceb12aa87d661.patch
 ab9c6b78b7ad3205bdb91ef725b09ddbe3c8945d.patch
 0013-jxrlib-ftbfs-with-GCC-14.patch
+0014-FTBFS-fix-for-pointer-type-mismatch.patch
+0015-FTBFS-fix-for-function-prototype-error.patch
