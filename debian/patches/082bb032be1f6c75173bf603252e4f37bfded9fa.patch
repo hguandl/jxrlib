@@ -1,6 +1,6 @@
 From: Milian Wolff <milian.wolff@kdab.com>
 Date: Mon, 7 Jun 2021 09:45:26 +0200
-Subject: [PATCH] Use mkstemp instead of tmpnam
+Subject: Use mkstemp instead of tmpnam
 
 tmpnam isn't threadsafe and shouldn't be used. Fixes compiler warning:
 ```

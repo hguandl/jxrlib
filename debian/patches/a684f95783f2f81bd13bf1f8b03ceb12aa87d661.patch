@@ -1,6 +1,6 @@
 From: Milian Wolff <milian.wolff@kdab.com>
 Date: Mon, 7 Jun 2021 10:00:09 +0200
-Subject: [PATCH] fix undefined behavior for left-shift of -1
+Subject: fix undefined behavior for left-shift of -1
 
 My hunch is that (-1 << 31) tries to build INT_MIN, so use that
 directly. Compare:

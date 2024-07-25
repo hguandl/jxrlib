@@ -1,6 +1,6 @@
 From: Milian Wolff <milian.wolff@kdab.com>
 Date: Mon, 7 Jun 2021 10:30:46 +0200
-Subject: [PATCH] Fix memory leaks when handling OOM scenario
+Subject: Fix memory leaks when handling OOM scenario
 
 If the second or third allocation failed, the code would leak
 the first and/or secon allocation. Free all buffers if we return

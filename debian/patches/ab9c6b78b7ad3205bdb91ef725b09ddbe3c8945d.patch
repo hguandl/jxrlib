@@ -1,6 +1,6 @@
 From: Milian Wolff <milian.wolff@kdab.com>
 Date: Mon, 7 Jun 2021 09:56:37 +0200
-Subject: [PATCH] fix warnings about unaligned loads from UBSAN
+Subject: fix warnings about unaligned loads from UBSAN
 
 Use memcpy instead to ensure that we don't get warnings about
 unaligned loads from UBSAN:
