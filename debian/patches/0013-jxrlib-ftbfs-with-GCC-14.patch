@@ -5,6 +5,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
+Bug-Debian: https://bugs.debian.org/1075105
+
 _byteswap_ulong() is defined in image/sys/strcodec.c
 
 ----

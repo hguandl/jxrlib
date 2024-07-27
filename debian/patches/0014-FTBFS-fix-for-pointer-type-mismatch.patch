@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Thu, 25 Jul 2024 16:00:12 +0900
 Subject: FTBFS fix for pointer type mismatch
 
+Bug-Debian: https://bugs.debian.org/1075105
 ---
  jxrencoderdecoder/JxrDecApp.c |  2 +-
  jxrtestlib/JXRTest.c          | 10 +++++-----

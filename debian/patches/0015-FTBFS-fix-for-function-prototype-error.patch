@@ -2,6 +2,7 @@ From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
 Date: Thu, 25 Jul 2024 16:01:01 +0900
 Subject: FTBFS fix for function prototype error
 
+Bug-Debian: https://bugs.debian.org/1075105
 ---
  jxrgluelib/JXRGlueJxr.c | 1 +
  1 file changed, 1 insertion(+)
