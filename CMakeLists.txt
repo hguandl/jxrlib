@@ -22,6 +22,7 @@ endmacro()
 
 if(NOT MSVC)
   set(DEF_ANSI __ANSI__)
+  set(JXR_MATH m)
 endif()
 
 include(TestBigEndian)
@@ -118,7 +119,7 @@ install(TARGETS jxrglue
 #	target_link_libraries(jxrglue ${BSD_LIBRARY})
 #endif()
 #target_link_libraries(jxrglue m)
-target_link_libraries(jxrglue PRIVATE jpegxr m)
+target_link_libraries(jxrglue PRIVATE jpegxr ${JXR_MATH})
 # Enc app files
 set(ENCAPP JxrEncApp)
 add_executable(${ENCAPP} ${DIR_EXEC}/${ENCAPP}.c)
