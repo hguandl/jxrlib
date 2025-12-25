@@ -31,7 +31,7 @@
 extern "C" {
 #endif
 
-#include <JXRGlue.h>
+#include "../jxrgluelib/JXRGlue.h"
 
 EXTERN_C const PKIID IID_PKImageBmpEncode;
 EXTERN_C const PKIID IID_PKImagePnmEncode;

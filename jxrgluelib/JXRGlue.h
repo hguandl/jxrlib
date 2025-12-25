@@ -31,8 +31,8 @@
 extern "C" {
 #endif
 
-#include <JXRMeta.h>
-#include <guiddef.h>
+#include "JXRMeta.h"
+#include "../common/include/guiddef.h"
 
 //================================================================
 #define WMP_SDK_VERSION 0x0101
